@@ -4,9 +4,17 @@
     "version": "v1.0.0",
     "name": "MIDI Gameplay",
     "developer": "WilRhy",
-    "description": "Play Geometry Dash using a connected MIDI controller or instrument hardware.",
-    "repository": "https://github.com/WilRhy/MIDI-Gameplay",
+    "description": "Play Geometry Dash using a connected MIDI controller.",
+    "repository": "https://github.com",
     "dependencies": [],
+    "actions": [
+        {
+            "id": "midi_jump",
+            "name": "MIDI Jump Trigger",
+            "description": "The action fired when your configured MIDI note or pad is pressed.",
+            "default": ["space"]
+        }
+    ],
     "resources": {
         "sprites": []
     }
