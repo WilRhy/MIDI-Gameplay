@@ -20,10 +20,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Installs and automatically maps FindGeode paths to the system environment
-      - name: Setup Geode SDK
-        uses: geode-sdk/setup-geode@v3.0.0-beta.1
-
+      # This single step downloads the SDK, handles the paths, and builds everything natively
       - name: Build Mod
         uses: geode-sdk/build-geode-mod@main
         with:
