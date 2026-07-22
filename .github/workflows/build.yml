@@ -25,4 +25,4 @@ jobs:
         with:
           bindings: geode-sdk/bindings
           combine: true
-          setup-sdk: true
+          sdk: true
