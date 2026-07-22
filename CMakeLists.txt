@@ -1,12 +1,13 @@
 cmake_minimum_required(VERSION 3.25)
 
-# Initialize the MIDI Gameplay Mod project
 project(MIDI-Gameplay VERSION 1.0.0)
 
-# Tell CMake to find the Geode package automatically via the action toolchain
+# Explicitly instruct CMake to search the Geode CLI directory for build configs
+list(APPEND CMAKE_MODULE_PATH "$ENV{USERPROFILE}/.geode/sdk/cmake")
+list(APPEND CMAKE_PREFIX_PATH "$ENV{USERPROFILE}/.geode/sdk")
+
 find_package(Geode REQUIRED)
 
-# Package your C++ source file using your developer profile ID
 add_geode_mod(
     wilrhy.midi_gameplay
     VERSION 1.0.0
