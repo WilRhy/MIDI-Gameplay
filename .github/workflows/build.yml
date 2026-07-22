@@ -25,8 +25,3 @@ jobs:
         with:
           bindings: geode-sdk/bindings
           combine: true
-        env:
-          # THE DEFINITIVE PATH BRIDGE: Feeds the exact extraction folder to CMake's search parameters
-          GEODE_SDK: "D:/a/MIDI-Gameplay/MIDI-Gameplay/geode-sdk-clone"
-          Geode_DIR: "D:/a/MIDI-Gameplay/MIDI-Gameplay/geode-sdk-clone"
-          CMAKE_PREFIX_PATH: "D:/a/MIDI-Gameplay/MIDI-Gameplay/geode-sdk-clone"
