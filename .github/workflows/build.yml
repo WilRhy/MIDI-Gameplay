@@ -7,34 +7,22 @@ on:
 
 jobs:
   build:
-    name: Build Windows Mod
-    runs-on: windows-2022
+    strategy:
+      fail-fast: false
+      matrix:
+        config:
+          - name: Windows
+            os: windows-2022
+
+    name: ${{ matrix.config.name }}
+    runs-on: ${{ matrix.config.os }}
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Set Up Ninja Compiler
-        run: |
-          choco install ninja
-
-      - name: Fetch and Install Geode CLI
-        shell: pwsh
-        run: |
-          # Fetch the official Geode install script securely
-          $Url = "https://githubusercontent.com"
-          Invoke-Expression (Invoke-RestMethod -Uri $Url)
-          
-          # Map environment parameters straight to the active runner session
-          echo "$env:USERPROFILE/.geode" >> $env:GITHUB_PATH
-          echo "GEODE_SDK=$env:USERPROFILE/.geode/sdk" >> $env:GITHUB_ENV
-
-      - name: Initialize Geode SDK Binaries
-        run: |
-          geode profile add --name GithubActions "C:/Program Files/GeometryDash.exe" win
-          geode sdk install 3.0.0-beta.1
-          geode sdk install-binaries --platform win --version 3.0.0-beta.1
-
-      - name: Compile C++ Source Code
-        run: |
-          cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="${{ env.GEODE_SDK }}" -DCMAKE_MODULE_PATH="${{ env.GEODE_SDK }}/cmake"
-          cmake --build build --config Release
+      # The official, black-box building action handles downloading and caching on its own layer
+      - name: Build Mod
+        uses: geode-sdk/build-geode-mod@main
+        with:
+          bindings: geode-sdk/bindings
+          combine: true
