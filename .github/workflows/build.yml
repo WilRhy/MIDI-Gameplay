@@ -25,3 +25,4 @@ jobs:
         with:
           bindings: geode-sdk/bindings
           combine: true
+          target: Win64
