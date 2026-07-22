@@ -20,6 +20,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # THIS STEP FIXES THE ERROR: It downloads and exposes FindGeode.cmake to CMake
+      - name: Setup Geode SDK
+        uses: geode-sdk/setup-geode@main
+
       - name: Build Mod
         uses: geode-sdk/build-geode-mod@main
         with:
