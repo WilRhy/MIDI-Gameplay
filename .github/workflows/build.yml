@@ -21,8 +21,10 @@ jobs:
       - uses: actions/checkout@v4
 
       - name: Build Mod
+        id: build-geode
         uses: geode-sdk/build-geode-mod@main
         with:
           bindings: geode-sdk/bindings
           combine: true
-          target: Win64
+          # Instructs the runner step to forward its paths directly to the environment
+          configure-args: "-DCMAKE_PREFIX_PATH=${{ steps.build-geode.outputs.sdk-path }} -DCMAKE_MODULE_PATH=${{ steps.build-geode.outputs.sdk-path }}/cmake"
