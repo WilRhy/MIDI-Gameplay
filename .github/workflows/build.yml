@@ -20,6 +20,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # THE ABSOLUTE REWRITE: Pulls the missing FindGeode scripts natively into your local directory layout
+      - name: Inject Local Configuration Framework
+        run: |
+          git clone --depth 1 --branch v3.0.0-beta.1 https://github.com geode-sdk-config
+
       - name: Build Mod
         uses: geode-sdk/build-geode-mod@main
         with:

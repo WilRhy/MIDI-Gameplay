@@ -2,15 +2,9 @@ cmake_minimum_required(VERSION 3.25)
 
 project(MIDI-Gameplay VERSION 1.0.0)
 
-# DYNAMIC PATH EXTRACTOR: Checks the cloud machine's temporary folders automatically
-if(DEFINED ENV{GEODE_SDK})
-    list(APPEND CMAKE_MODULE_PATH "$ENV{GEODE_SDK}/cmake")
-    list(APPEND CMAKE_PREFIX_PATH "$ENV{GEODE_SDK}")
-else()
-    # Safe fallback mapping for local testing on your machine's C: drive
-    list(APPEND CMAKE_MODULE_PATH "$ENV{USERPROFILE}/.geode/sdk/cmake")
-    list(APPEND CMAKE_PREFIX_PATH "$ENV{USERPROFILE}/.geode/sdk")
-endif()
+# FORCE SYSTEM LOOKUP: Point directly to our local tracking repository module
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_SOURCE_DIR}/geode-sdk-config/cmake")
+list(APPEND CMAKE_PREFIX_PATH "${CMAKE_CURRENT_SOURCE_DIR}/geode-sdk-config")
 
 find_package(Geode REQUIRED)
 
