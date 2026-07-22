@@ -7,20 +7,33 @@ on:
 
 jobs:
   build:
-    strategy:
-      fail-fast: false
-      matrix:
-        config:
-          - name: Windows
-            os: windows-2022
-
-    name: ${{ matrix.config.name }}
-    runs-on: ${{ matrix.config.os }}
+    name: Windows Native Build
+    runs-on: windows-2022
 
     steps:
       - uses: actions/checkout@v4
 
-      - name: Build Mod
-        uses: geode-sdk/build-geode-mod@main
-        with:
-          combine: true
+      - name: Install Ninja Compiler Engine
+        run: choco install ninja
+
+      - name: Force Global Geode SDK Installation
+        shell: pwsh
+        run: |
+          # Download and execute the official installer directly onto the OS layer
+          $script = Invoke-RestMethod -Uri "https://githubusercontent.com"
+          Invoke-Expression $script
+          
+          # Manually force the absolute installation directories onto global runner paths
+          echo "$env:USERPROFILE/.geode" >> $env:GITHUB_PATH
+          echo "GEODE_SDK=$env:USERPROFILE/.geode/sdk" >> $env:GITHUB_ENV
+
+      - name: Initialize Profile and Development Modules
+        run: |
+          geode profile add --name GithubActions "C:/Program Files/GeometryDash.exe" win
+          geode sdk install 3.0.0-beta.1
+          geode sdk install-binaries --platform win --version 3.0.0-beta.1
+
+      - name: Execute Native C++ Compiler Pipeline
+        run: |
+          cmake -B build -G Ninja -DCMAKE_BUILD_TYPE=Release -DCMAKE_PREFIX_PATH="${{ env.GEODE_SDK }}" -DCMAKE_MODULE_PATH="${{ env.GEODE_SDK }}/cmake"
+          cmake --build build --config Release
