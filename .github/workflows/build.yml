@@ -20,9 +20,9 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Revert to standard execution; our CMake multi-path fallback will manage mapping
       - name: Build Mod
         uses: geode-sdk/build-geode-mod@main
         with:
           bindings: geode-sdk/bindings
           combine: true
-          sdk: "3.0.0-beta.1"
