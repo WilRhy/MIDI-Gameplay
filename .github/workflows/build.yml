@@ -20,9 +20,10 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # This single step downloads the SDK, handles the paths, and builds everything natively
+      # Forces the builder to explicitly introduce its profile paths into CMake variables
       - name: Build Mod
         uses: geode-sdk/build-geode-mod@main
         with:
           bindings: geode-sdk/bindings
           combine: true
+          configure-args: "-DCMAKE_PREFIX_PATH=D:/a/MIDI-Gameplay/MIDI-Gameplay/cli-profile/geode/sdk -DCMAKE_MODULE_PATH=D:/a/MIDI-Gameplay/MIDI-Gameplay/cli-profile/geode/sdk/cmake"
