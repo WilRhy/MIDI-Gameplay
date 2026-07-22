@@ -7,31 +7,35 @@ using namespace geode::prelude;
 
 bool g_midiInitialized = false;
 
+// Safe callback structure that triggers a native player jump action directly
 void myMidiCallback(double deltatime, std::vector<unsigned char>* message, void* userData) {
-    if (!message || message->empty()) return;
+    auto playLayer = static_cast<PlayLayer*>(userData);
+    if (!playLayer || !message || message->empty()) return;
 
     unsigned char status = message->at(0);
     unsigned char velocity = message->at(2);
 
+    // Read player option preference natively from the Geode options box
     std::string currentMode = Mod::get()->getSettingValue<std::string>("input-mode");
 
     if (velocity > 0) {
         bool shouldTriggerJump = false;
 
+        // 0x99 = Universal standard status byte for Drum Pads / Channel 10
         if (currentMode == "drum_pad" && status == 0x99) {
             shouldTriggerJump = true;
         } 
+        // 0x90 = Universal standard status byte for Piano Keys / Channel 1
         else if (currentMode == "piano_key" && status == 0x90) {
             shouldTriggerJump = true;
         }
 
         if (shouldTriggerJump) {
-            log::info("Validated MIDI Input Event! Firing custom action trigger...");
-            Loader::get()->queueInMainThread([]() {
-                auto actionHandler = ActionBindingHandler::get();
-                if (actionHandler) {
-                    actionHandler->triggerAction("wilrhy.midi_gameplay/midi_jump");
-                }
+            log::info("Valid MIDI signal intercepted! Triggering native player jump.");
+            
+            // Execute a native jumping click sequence directly on the core thread
+            Loader::get()->queueInMainThread([playLayer]() {
+                playLayer->pushButton(PlayerButton::Jump, false);
             });
         }
     }
@@ -44,7 +48,7 @@ class $modify(MyPlayLayer, PlayLayer) {
         }
 
         if (!g_midiInitialized) {
-            log::info("MIDI keybind pipeline hooked successfully.");
+            log::info("MIDI native pipeline hooked successfully.");
             g_midiInitialized = true;
         }
 

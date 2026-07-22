@@ -3,18 +3,10 @@
     "id": "wilrhy.midi_gameplay",
     "version": "v1.0.0",
     "name": "MIDI Gameplay",
-    "developer": "Your Name",
-    "description": "Play Geometry Dash using a connected MIDI controller.",
-    "repository": "https://github.com",
+    "developer": "WilRhy",
+    "description": "A Geode Mod to play Geometry Dash using a MIDI keyboard or controller.",
+    "repository": "https://github.com/WilRhy/MIDI-Gameplay",
     "dependencies": [],
-    "actions": [
-        {
-            "id": "midi_jump",
-            "name": "MIDI Jump Trigger",
-            "description": "The action fired when your configured MIDI note or pad is pressed.",
-            "default": ["space"]
-        }
-    ],
     "settings": {
         "input-mode": {
             "name": "Input Hardware Mode",

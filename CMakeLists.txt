@@ -2,11 +2,10 @@ cmake_minimum_required(VERSION 3.25)
 
 project(MIDI-Gameplay VERSION 1.0.0)
 
-# Intercept and convert the runner's path variable into a clean string layout
+# Clean, safe environmental mapping that drops the buggy formatting line completely
 if(DEFINED ENV{GEODE_SDK})
-    cmake_path(SET REAL_SDK_PATH CONVERT "ENV{GEODE_SDK}" TO_CMAKE_PATH_LIST)
-    list(APPEND CMAKE_MODULE_PATH "${REAL_SDK_PATH}/cmake")
-    list(APPEND CMAKE_PREFIX_PATH "${REAL_SDK_PATH}")
+    list(APPEND CMAKE_MODULE_PATH "$ENV{GEODE_SDK}/cmake")
+    list(APPEND CMAKE_PREFIX_PATH "$ENV{GEODE_SDK}")
 endif()
 
 find_package(Geode REQUIRED)
