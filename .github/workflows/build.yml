@@ -20,6 +20,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # THE FOOLPROOF FIX: Pulls the missing FindGeode scripts directly into the local workspace layout
+      - name: Fetch Local SDK Configuration Hooks
+        run: |
+          git clone --depth 1 --branch v3.0.0-beta.1 https://github.com geode-sdk-local
+
       - name: Build Mod
         uses: geode-sdk/build-geode-mod@main
         with:
