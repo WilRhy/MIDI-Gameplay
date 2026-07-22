@@ -20,11 +20,12 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      # Installs and automatically maps FindGeode paths to the system environment
+      - name: Setup Geode SDK
+        uses: geode-sdk/setup-geode@v3.0.0-beta.1
+
       - name: Build Mod
-        id: build-geode
         uses: geode-sdk/build-geode-mod@main
         with:
           bindings: geode-sdk/bindings
           combine: true
-          # Instructs the runner step to forward its paths directly to the environment
-          configure-args: "-DCMAKE_PREFIX_PATH=${{ steps.build-geode.outputs.sdk-path }} -DCMAKE_MODULE_PATH=${{ steps.build-geode.outputs.sdk-path }}/cmake"
