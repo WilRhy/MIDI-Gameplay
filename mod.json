@@ -3,7 +3,7 @@
     "id": "wilrhy.midi_gameplay",
     "version": "v1.0.0",
     "name": "MIDI Gameplay",
-    "developer": "WilRhy",
+    "developer": "Your Name",
     "description": "Play Geometry Dash using a connected MIDI controller.",
     "repository": "https://github.com",
     "dependencies": [],
@@ -15,6 +15,18 @@
             "default": ["space"]
         }
     ],
+    "settings": {
+        "input-mode": {
+            "name": "Input Hardware Mode",
+            "description": "Choose whether you are using a Drum Pad or a Piano Key to jump.",
+            "type": "string",
+            "default": "drum_pad",
+            "one-of": [
+                "drum_pad",
+                "piano_key"
+            ]
+        }
+    },
     "resources": {
         "sprites": []
     }

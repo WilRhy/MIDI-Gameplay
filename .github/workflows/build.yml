@@ -20,11 +20,8 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # This explicitly exposes the background SDK paths directly to CMake
       - name: Build Mod
         uses: geode-sdk/build-geode-mod@main
         with:
           bindings: geode-sdk/bindings
           combine: true
-        env:
-          GEODE_SDK: ${{ github.workspace }}/geode-sdk

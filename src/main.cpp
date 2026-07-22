@@ -1,21 +1,32 @@
 #include <Geode/Geode.hpp>
 #include <Geode/modify/PlayLayer.hpp>
 #include <vector>
+#include <string>
 
 using namespace geode::prelude;
 
 bool g_midiInitialized = false;
 
-// Safe callback structure that won't confuse the compiler
 void myMidiCallback(double deltatime, std::vector<unsigned char>* message, void* userData) {
     if (!message || message->empty()) return;
 
     unsigned char status = message->at(0);
-    unsigned char type = status & 0xF0;
+    unsigned char velocity = message->at(2);
 
-    if (type == 0x90 || type == 0x99) {
-        unsigned char velocity = message->at(2);
-        if (velocity > 0) {
+    std::string currentMode = Mod::get()->getSettingValue<std::string>("input-mode");
+
+    if (velocity > 0) {
+        bool shouldTriggerJump = false;
+
+        if (currentMode == "drum_pad" && status == 0x99) {
+            shouldTriggerJump = true;
+        } 
+        else if (currentMode == "piano_key" && status == 0x90) {
+            shouldTriggerJump = true;
+        }
+
+        if (shouldTriggerJump) {
+            log::info("Validated MIDI Input Event! Firing custom action trigger...");
             Loader::get()->queueInMainThread([]() {
                 auto actionHandler = ActionBindingHandler::get();
                 if (actionHandler) {
