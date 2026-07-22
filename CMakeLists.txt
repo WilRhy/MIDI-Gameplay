@@ -2,12 +2,8 @@ cmake_minimum_required(VERSION 3.25)
 
 project(MIDI-Gameplay VERSION 1.0.0)
 
-# Check if the GitHub runner has populated the background SDK location
-if(DEFINED ENV{GEODE_SDK})
-    list(APPEND CMAKE_MODULE_PATH "$ENV{GEODE_SDK}/cmake")
-    list(APPEND CMAKE_PREFIX_PATH "$ENV{GEODE_SDK}")
-endif()
-
+# The background toolchain handles this macro automatically. 
+# Overriding it or manual mapping breaks the environment routing paths.
 find_package(Geode REQUIRED)
 
 add_geode_mod(
