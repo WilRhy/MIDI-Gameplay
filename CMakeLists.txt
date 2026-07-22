@@ -2,16 +2,11 @@ cmake_minimum_required(VERSION 3.25)
 
 project(MIDI-Gameplay VERSION 1.0.0)
 
-# Clean, cross-platform home directory configuration parsing
-if(DEFINED ENV{USERPROFILE})
-    set(GEODE_HOME_DIR "$ENV{USERPROFILE}")
-else()
-    set(GEODE_HOME_DIR "$ENV{HOME}")
+# Check if the GitHub runner has populated the background SDK location
+if(DEFINED ENV{GEODE_SDK})
+    list(APPEND CMAKE_MODULE_PATH "$ENV{GEODE_SDK}/cmake")
+    list(APPEND CMAKE_PREFIX_PATH "$ENV{GEODE_SDK}")
 endif()
-
-# Bind directly to the absolute Geode CLI paths using the clean folder parsing
-list(APPEND CMAKE_MODULE_PATH "${GEODE_HOME_DIR}/.geode/sdk/cmake")
-list(APPEND CMAKE_PREFIX_PATH "${GEODE_HOME_DIR}/.geode/sdk")
 
 find_package(Geode REQUIRED)
 
