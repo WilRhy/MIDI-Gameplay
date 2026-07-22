@@ -1,0 +1,13 @@
+{
+    "geode": "3.0.0-beta.1",
+    "id": "wilrhy.midi_gameplay",
+    "version": "v1.0.0",
+    "name": "MIDI Gameplay",
+    "developer": "WilRhy",
+    "description": "Play Geometry Dash using a connected MIDI controller or instrument hardware.",
+    "repository": "https://github.com/WilRhy/MIDI-Gameplay",
+    "dependencies": [],
+    "resources": {
+        "sprites": []
+    }
+}
