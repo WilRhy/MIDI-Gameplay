@@ -25,4 +25,4 @@ jobs:
         with:
           bindings: geode-sdk/bindings
           combine: true
-          sdk-version: latest
+          sdk: "3.0.0-beta.1"
