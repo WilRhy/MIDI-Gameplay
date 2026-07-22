@@ -20,14 +20,6 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # THE ULTIMATE FIX: Force-installs the toolchain directly to the global Windows system environment
-      - name: Initialize Global System Environment Variables
-        shell: pwsh
-        run: |
-          irm https://githubusercontent.com | iex
-          echo "GEODE_SDK=$env:USERPROFILE/.geode/sdk" >> $env:GITHUB_ENV
-          echo "$env:USERPROFILE/.geode" >> $env:GITHUB_PATH
-
       - name: Build Mod
         uses: geode-sdk/build-geode-mod@main
         with:
