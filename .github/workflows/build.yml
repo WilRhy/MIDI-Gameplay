@@ -20,9 +20,13 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
-      # Revert to standard execution; our CMake multi-path fallback will manage mapping
       - name: Build Mod
+        id: build-mod
         uses: geode-sdk/build-geode-mod@main
         with:
           bindings: geode-sdk/bindings
           combine: true
+        env:
+          # Automatically resolves the exact cloud directory folder structure 
+          CMAKE_PREFIX_PATH: "${{ github.workspace }}/cli-profile/geode/sdk"
+          CMAKE_MODULE_PATH: "${{ github.workspace }}/cli-profile/geode/sdk/cmake"
